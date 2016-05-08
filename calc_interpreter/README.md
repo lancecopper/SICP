@@ -1,6 +1,6 @@
-* a small calulater aiming to help understanding interpreter
+# a small calulater aiming to help understanding interpreter
 
-* it works like:
+# it works like:
 
 \>\>\> add(1,2)
 

@@ -1,1 +1,1 @@
-* exercising code during reading SICP
+# exercises during reading SICP

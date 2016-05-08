@@ -111,7 +111,7 @@ def analyze_token(token):
 	try:
 		return int(token)
 	except (TypeError, ValueError):
-		try:1
+		try:
 			return float(token)
 		except (TypeError, ValueError):
 			return token
