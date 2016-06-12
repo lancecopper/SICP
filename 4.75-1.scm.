@@ -1,0 +1,65 @@
+(load "/home/lancecopper/code/SICP/logic-interpreter.scm")
+
+
+(define (unique-query exps) (car exps))
+
+(define (uniquely-asserted query-pattern frame-stream)
+  (unique-stream-flatmap
+   (lambda (frame)
+     (stream-append-delayed
+      (find-assertions (unique-query query-pattern) frame)
+      (delay (apply-rules (unique-query query-pattern) frame))))
+   frame-stream))
+
+(define (singleton-stream? s) 
+  (and (not (stream-null? s)) 
+       (stream-null? (stream-cdr s)))) 
+
+(define (unique-stream-flatmap proc s)
+  (unique-flatten-stream (stream-map proc s)))
+
+(define (unique-flatten-stream stream)
+  (if (stream-null? stream)
+      the-empty-stream
+      (if (singleton-stream? (stream-car stream))
+          (cons-stream
+            (stream-car stream)
+            (unique-flatten-stream (stream-cdr stream)))
+          (unique-flatten-stream (stream-cdr stream)))))
+
+
+(put 'unique 'qeval uniquely-asserted)
+
+
+
+
+
+(query-driver-loop)
+
+(assert! (married Minnie Mickey))
+
+(married Minnie ?who)
+
+(unique (married Minnie ?who))
+
+
+
+
+(unique (job ?x (computer wizard)))
+
+(job ?x (computer wizard))
+
+(job (Bitdiddle Ben) ?y)
+
+
+(assert! (married lance jeanifer))
+
+(married lance ?who)
+
+(unique (married lance ?who))
+
+
+
+
+
+

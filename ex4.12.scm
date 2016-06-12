@@ -1,0 +1,35 @@
+(define (env-loop var null-action eq-action env)
+  (define (scan vars vals)
+    (cond ((null? vars)
+           (null-action env))
+          ((eq? var (car vars))
+           (eq-action vals))
+          (else (scan (cdr vars) (cdr vals)))))
+  (if (eq? env the-empty-environment)
+      (error "Unbound variable" var)
+      (let ((frame (first-frame env)))
+        (scan (frame-variables frame)
+              (frame-values frame)))))
+;
+(define (set-variable-value! var val env)
+  (define (null-action e)
+    (env-loop var null-action eq-action (enclosing-environment e)))
+  (define (eq-action vs)
+    (set-car! vs val))
+  (env-loop var null-action eq-action env))
+;
+(define (lookup-variable-value var env)
+  (define (null-action e)
+    (env-loop var null-action eq-action (enclosing-environment e)))
+  (define eq-action car)
+  (env-loop var null-action eq-action env))
+;
+(define (define-variable! var val env)
+  (define (null-action e)
+    (add-binding-to-frame! var val (first-frame e)))
+  (define (eq-action vs)
+    (set-car! vs val))
+  (env-loop var null-action eq-action env))
+
+
+
