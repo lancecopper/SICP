@@ -53,6 +53,10 @@
 
 
 ;;; c
+; install scan-out-defines into make-procedure. 
+;; otherwise, when we call procedure-body, procedure
+;; scan-out-defines will be called.
+
 (define (make-procedure parameters body env)
   (list 'procedure parameters (scan-out-defines body) env))
 

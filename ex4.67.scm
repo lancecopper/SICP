@@ -104,6 +104,6 @@ I’ll come back to this after section 4.4.4
 
 
 ;;;
-outranked-by ?staff-person ?boss)
+(outranked-by ?staff-person ?boss)
 
 

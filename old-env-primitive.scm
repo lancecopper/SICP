@@ -1,3 +1,11 @@
+(define (iter-display dis-list)
+   (if (null? dis-list)
+       'done
+       (begin
+         (newline)
+         (display (car dis-list))
+         (iter-display (cdr dis-list)))))
+
 
 (define (true? x)
   (not (eq? x false)))
